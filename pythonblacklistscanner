@@ -1,0 +1,22 @@
+from web3 import Web3
+
+# Connect to an Ethereum node
+w3 = Web3(Web3.HTTPProvider('https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID'))
+
+# Instantiate the smart contract
+contract_address = '0x1234567890123456789012345678901234567890'
+contract_abi = [...]  # Replace with the ABI of your smart contract
+contract = w3.eth.contract(address=contract_address, abi=contract_abi)
+
+# List of addresses to check
+addresses = ['0x123...', '0x456...', '0x789...', ...]
+
+# Check each address against the smart contract
+results = []
+for address in addresses:
+    is_blacklisted = contract.functions.blacklists(address).call()
+    results.append((address, is_blacklisted))
+
+# Print the results
+for address, is_blacklisted in results:
+    print(f'{address}: {"blacklisted" if is_blacklisted else "not blacklisted"}')
